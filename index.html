@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send hex to your printer</title>
+  <script type="text/javascript">
+    function hexToBase64(hex) {
+        const binary = hex.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
+        const base64 = btoa(String.fromCharCode.apply(null, binary));
+        return base64;
+    }
+  </script>
+</head>
+<body>
+  <h1>Send hex commands to your printer with RawBT</h1>
+  <input type="text" id="hexInput" placeholder="Enter Hex Command" />
+  <button onclick="convertToBase64()">Execute</button>
+
+  <script>
+    function convertToBase64() {
+      const hexInput = document.getElementById('hexInput').value;
+      const base64Data = hexToBase64(hexInput);
+      const redirectUrl = `intent:base64,${base64Data}#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;end;`;
+      window.location.href = redirectUrl;
+    }
+  </script>
+</body>
+</html>
